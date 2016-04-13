@@ -14,7 +14,6 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,7 +36,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity{
     private TextView mymapData;
     private GoogleMap mMap;
     private static final int GPS_ERRORDIALOG_REQUEST = 9001; //any value you want
@@ -85,7 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //setup send
                 OutputStream os = new BufferedOutputStream(connection.getOutputStream());
                 os.write(message.getBytes());
-                //clean up
                 os.flush();
                 connection.connect();
 
@@ -148,9 +146,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mainLocation(pivotLocation.get(0), pivotLocation.get(1), DEFAULTZOOM);
         }
     }
-
-    //getting request end
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -164,7 +159,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             if (initMap()) {
                 Toast.makeText(this, "Ready to map!", Toast.LENGTH_SHORT).show();
-                //mMap.setMyLocationEnabled(true); //add mylocation to the map, to show current location
             }
             else{
                 Toast.makeText(this, "Map isn't Available", Toast.LENGTH_SHORT).show();
@@ -173,12 +167,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else{
             setContentView(R.layout.activity_main);
         }
-
-        //Button moveit = (Button)findViewById(R.id.mapPage);
-
-        //button to display json
-        //Button btnHit = (Button)findViewById(R.id.gomap);
-        //mymapData = (TextView)findViewById(R.id.displayText);
 
     }
 
@@ -230,23 +218,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return (mMap != null);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }
 }
