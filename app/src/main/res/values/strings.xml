@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JustParkNew2.0</string>
+    <string name="title_activity_map_fragment">MapFragment</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
