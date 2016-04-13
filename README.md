@@ -9,6 +9,8 @@ The JustPark API is being requested on the JSONTask method by using HttpURLConne
 UI Prespective
 The desired location is marked with a blue pin while the available parking spots are marked with a red pin. The location title is also displayed on the Google Maps library marker pin. All the logos and the pictures were made by Adobe Photoshop.
 
+**Device needs internet connection in order to work**
+
 **This project has been tested on Android 5.0.2 Lollipop**
 
 
