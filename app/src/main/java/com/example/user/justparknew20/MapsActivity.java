@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -49,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //getting all requests
     public class JSONTask extends AsyncTask<String, String, String> {
         HashMap<String,ArrayList<Double>> pairingTitle = new HashMap<>();
+        ArrayList<Double> pivotLocation = new ArrayList<>();
 
         @Override
         protected String doInBackground(String... params) {
@@ -102,14 +104,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 JSONObject parentObject = new JSONObject(finalJson);
                 JSONArray parentArray = parentObject.getJSONArray("data");
 
-                //go through all the data from JSON
+                //go through all the data from JSON to find available parking spot
                 for(int i = 0; i<parentArray.length(); i++) {
                     JSONObject finalobject = parentArray.getJSONObject(i);
                     ArrayList<Double> locations = new ArrayList<>();
                     locations.add(Double.parseDouble(finalobject.getString("address_lat")));
-                    locations.add (Double.parseDouble(finalobject.getString("address_lng")));//get the position
-                    pairingTitle.put(finalobject.getString("title"),locations); //pair the title with addres longlat
+                    locations.add (Double.parseDouble(finalobject.getString("address_lng")));
+                    pairingTitle.put(finalobject.getString("title"),locations);
                 }
+                //GET THE DESIRED LOCATION
+                pivotLocation.add(Double.parseDouble(nested.getString("lat")));
+                pivotLocation.add(Double.parseDouble(nested.getString("lng")));
 
             } catch (MalformedURLException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -139,8 +144,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             super.onPostExecute(s);
             for(Map.Entry<String, ArrayList<Double>> pair : pairingTitle.entrySet()) {
                 gotoLocation(pair.getKey(),pair.getValue().get(0), pair.getValue().get(1), DEFAULTZOOM);
-
             }
+            mainLocation(pivotLocation.get(0), pivotLocation.get(1), DEFAULTZOOM);
         }
     }
 
@@ -175,6 +180,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Button btnHit = (Button)findViewById(R.id.gomap);
         //mymapData = (TextView)findViewById(R.id.displayText);
 
+    }
+
+    private void mainLocation (double lat, double lng, float zoom) {
+        LatLng ll = new LatLng(lat,lng);
+        CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, zoom);
+        mMap.moveCamera(update);
+        mMap.addMarker(new MarkerOptions()
+                .position(ll)
+                .title("This is your desired location!")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
     }
 
     private void gotoLocation(String title, double lat, double lng, float zoom) {
