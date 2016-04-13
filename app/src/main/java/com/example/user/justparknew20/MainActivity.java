@@ -13,17 +13,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvData;
+    private TextView mymapData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +43,30 @@ public class MainActivity extends AppCompatActivity {
 
         //button to display json
         Button btnHit = (Button)findViewById(R.id.btnHit);
-        tvData = (TextView)findViewById(R.id.tvJsonItem);
+        mymapData = (TextView)findViewById(R.id.tvJsonItem);
+
+        //to set up POST request
+
+
+        /*try {
+            URL url = new URL("https://api.justpark.com/apiv3/search/region");
+            HttpsURLConnection connection = (HttpsURLConnection)url.openConnection();
+
+            String urlParameters ="";
+
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
 
         assert btnHit != null;
         btnHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new JSONTask().execute("https://api.justpark.com/1.1/location/?q=wembley");
-
+                new JSONTask().execute("https://api.justpark.com/apiv3/search/region");//new
             }
         });
     }
@@ -64,6 +81,35 @@ public class MainActivity extends AppCompatActivity {
             try {
                 URL url = new URL(params[0]);
                 connection = (HttpURLConnection) url.openConnection();
+
+                //Create JSONObject here
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("to", "2016-04-27 07:50:00");
+                jsonParam.put("from", "2016-04-27 19:40:00");
+                JSONObject nested = new JSONObject();
+                nested.put("lat", "51.4666895");
+                nested.put("lng", "-0.0052762");
+                jsonParam.put("near",nested);
+
+                String message = jsonParam.toString();
+
+                //add new one
+                connection.setReadTimeout( 10000 /*milliseconds*/ );
+                connection.setConnectTimeout( 15000 /* milliseconds */ );
+                connection.setRequestMethod("POST");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setFixedLengthStreamingMode(message.getBytes().length);
+
+                connection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+                connection.setRequestProperty("X-Requested-With", "XMLHttpRequest");
+
+
+                //setup send
+                OutputStream os = new BufferedOutputStream(connection.getOutputStream());
+                os.write(message.getBytes());
+                //clean up
+                os.flush();
                 connection.connect();
 
                 InputStream stream = connection.getInputStream();
@@ -79,12 +125,12 @@ public class MainActivity extends AppCompatActivity {
                 String finalJson = buffer.toString();
 
                 JSONObject parentObject = new JSONObject(finalJson);
-                JSONArray parentArray = parentObject.getJSONArray("coords");
+                JSONArray parentArray = parentObject.getJSONArray("data");
 
                 JSONObject finalobject = parentArray.getJSONObject(0);
 
-                String latWembley = finalobject.getString("lat");//get the wemblet lat
-                String langWembley = finalobject.getString("lng");
+                String latWembley = finalobject.getString("address_lat");//get the wembley lat
+                String langWembley = finalobject.getString("address_lng");
 
                 return latWembley + "and lang is" + langWembley;//display wembley lat lang
 
@@ -96,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             } finally {
+
                 if (connection != null){
                     connection.disconnect();}
                 try {
@@ -112,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            tvData.setText(s);
+            mymapData.setText(s);
         }
     }
 
