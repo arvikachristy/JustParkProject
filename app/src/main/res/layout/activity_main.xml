@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.example.user.justparknew20.MainActivity"
-    android:background="@drawable/base"
+    android:background="@drawable/base1"
     android:weightSum="1">
 
     <ImageView

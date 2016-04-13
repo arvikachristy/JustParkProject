@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/base"
+    android:background="@drawable/base1"
     android:weightSum="1">
 
     <LinearLayout
@@ -24,8 +24,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="346dp"
-    android:layout_height="411dp"
+    android:layout_width="363dp"
+    android:layout_height="428dp"
     tools:context="com.example.user.justparknew20.MapsActivity" />
 
     <ImageView
