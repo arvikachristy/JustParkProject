@@ -16,18 +16,17 @@
         android:layout_width="match_parent"
         android:layout_height="197dp"
         android:id="@+id/logo"
-        android:layout_gravity="center_horizontal"
         android:longClickable="true"
         android:layout_weight="0.56"
-        android:src="@drawable/wembley" />
+        android:src="@drawable/logo" />
 
     <Button
-        android:layout_width="253dp"
-        android:layout_height="wrap_content"
+        android:layout_width="303dp"
+        android:layout_height="66dp"
         android:id="@+id/mapPage"
-        android:text="Take me there!"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:background="#00ba0c" />
+        android:background="@drawable/button"
+        android:layout_weight="0.15" />
 
 </LinearLayout>

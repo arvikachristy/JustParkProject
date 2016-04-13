@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //button to move page
         Button moveit = (Button)findViewById(R.id.mapPage);
         moveit.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -24,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, MapsActivity.class));
             }
         });
+
+        //button to move page
+
 
 
     }
