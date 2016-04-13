@@ -9,24 +9,24 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context="com.example.user.justparknew20.MainActivity"
-    android:background="#1c1c1c"
+    android:background="@drawable/base"
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="197dp"
+        android:layout_width="331dp"
+        android:layout_height="284dp"
         android:id="@+id/logo"
         android:longClickable="true"
-        android:layout_weight="0.56"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="10dp" />
 
     <Button
         android:layout_width="303dp"
         android:layout_height="66dp"
         android:id="@+id/mapPage"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:background="@drawable/button"
+        android:background="@drawable/buttonme"
         android:layout_weight="0.15" />
 
 </LinearLayout>
