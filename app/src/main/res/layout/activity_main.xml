@@ -13,12 +13,10 @@
     android:weightSum="1">
 
     <TextView
-        android:id="@+id/tvJsonItem"
-        android:layout_width="276dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.03"
-        android:autoText="false"
-        android:background="#ffffff" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/tvJsonItem" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -32,18 +30,17 @@
     <Button
         android:layout_width="253dp"
         android:layout_height="wrap_content"
-        android:id="@+id/btnHit"
-        android:text="Show Location"
-        android:layout_gravity="top|center"
-        android:layout_marginTop="25dp"
-        android:background="#00ba0c" />
-
-    <Button
-        android:layout_width="253dp"
-        android:layout_height="wrap_content"
         android:id="@+id/mapPage"
-        android:text="Take me to Wembley"
+        android:text="Take me there!"
         android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:background="#00ba0c" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/btnHit"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.56" />
 </LinearLayout>

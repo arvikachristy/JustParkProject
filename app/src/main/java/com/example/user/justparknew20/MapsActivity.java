@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +32,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //getting all requests
     public class JSONTask extends AsyncTask<String, String, String> {
-        HashMap<Double, Double> locations = new HashMap<>();
+        HashMap<String,ArrayList<Double>> pairingTitle = new HashMap<>();
 
         @Override
         protected String doInBackground(String... params) {
@@ -102,11 +102,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 JSONObject parentObject = new JSONObject(finalJson);
                 JSONArray parentArray = parentObject.getJSONArray("data");
 
+                //go through all the data from JSON
                 for(int i = 0; i<parentArray.length(); i++) {
                     JSONObject finalobject = parentArray.getJSONObject(i);
-                    locations.put(Double.parseDouble(finalobject.getString("address_lat")), Double.parseDouble(finalobject.getString("address_lng")));//get the position
+                    ArrayList<Double> locations = new ArrayList<>();
+                    locations.add(Double.parseDouble(finalobject.getString("address_lat")));
+                    locations.add (Double.parseDouble(finalobject.getString("address_lng")));//get the position
+                    pairingTitle.put(finalobject.getString("title"),locations); //pair the title with addres longlat
                 }
-                //return latWembley + "and lang is" + langWembley;//display wembley lat lang
 
             } catch (MalformedURLException e) {
                 System.out.println("Error: " + e.getMessage());
@@ -134,10 +137,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(String s) {
             //get where the location is
             super.onPostExecute(s);
-            for(Map.Entry<Double, Double> pair : locations.entrySet()) {
-                gotoLocation(pair.getKey(),pair.getValue(), DEFAULTZOOM);
+            for(Map.Entry<String, ArrayList<Double>> pair : pairingTitle.entrySet()) {
+                gotoLocation(pair.getKey(),pair.getValue().get(0), pair.getValue().get(1), DEFAULTZOOM);
+
             }
-            mymapData.setText(s);
         }
     }
 
@@ -166,19 +169,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             setContentView(R.layout.activity_main);
         }
 
-        Button moveit = (Button)findViewById(R.id.mapPage);
+        //Button moveit = (Button)findViewById(R.id.mapPage);
 
         //button to display json
-        Button btnHit = (Button)findViewById(R.id.gomap);
-        mymapData = (TextView)findViewById(R.id.displayText);
+        //Button btnHit = (Button)findViewById(R.id.gomap);
+        //mymapData = (TextView)findViewById(R.id.displayText);
 
     }
 
-    private void gotoLocation(double lat, double lng, float zoom) {
+    private void gotoLocation(String title, double lat, double lng, float zoom) {
         LatLng ll = new LatLng(lat,lng);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll, zoom);
         mMap.moveCamera(update);
-        mMap.addMarker(new MarkerOptions().position(ll).title("This is the possible parking spot!")); //pin the location details
+        mMap.addMarker(new MarkerOptions()
+                .position(ll)
+                .title("This is a possible parking spot!")
+                .snippet(title)
+        ); //pin the location details
     }
 
     public boolean servicesOK(){

@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    >
+    android:background="@color/abc_input_method_navigation_guard"
+    android:weightSum="1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,20 +17,16 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go"
-            android:id="@+id/gomap"
-            android:layout_gravity="right|center_vertical"
-            android:onClick="geoLocate"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/displayText"
-            android:layout_weight="0.77" />
+            android:layout_weight="0.19"
+            android:text="All of your Possible Parking Spot"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
     </LinearLayout>
 
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -37,7 +34,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
-    android:layout_width="match_parent"
+    android:layout_width="369dp"
     android:layout_height="match_parent"
     tools:context="com.example.user.justparknew20.MapsActivity" />
 </LinearLayout>
