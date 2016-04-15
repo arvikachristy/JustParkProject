@@ -13,5 +13,7 @@ The desired location is marked with a blue pin while the available parking spots
 
 **This project has been tested on Android 5.0.2 Lollipop**
 
+<a href="https://gyazo.com/ba45d24b3a7f195d7bf383785a005a0c"><img src="https://i.gyazo.com/ba45d24b3a7f195d7bf383785a005a0c.gif" alt="https://gyazo.com/ba45d24b3a7f195d7bf383785a005a0c"/></a>
 
+<a href="https://gyazo.com/0b482098f81af178d1094db54a0572dc"><img src="https://i.gyazo.com/0b482098f81af178d1094db54a0572dc.gif" alt="https://gyazo.com/0b482098f81af178d1094db54a0572dc"/></a>
 
